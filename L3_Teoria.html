@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teoria Matematica - Ripasso</title>
+    
+    <!-- Configurazione MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid #dee2e6;
+            overflow-x: auto;
+            justify-content: center;
+        }
+        
+        .tab {
+            padding: 20px 40px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+            color: #667eea;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3::before {
+            content: '▶';
+            margin-right: 15px;
+            color: #667eea;
+        }
+        
+        .theory-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            margin: 25px 0;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .formula-box {
+            background: #fff;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.2);
+            text-align: center;
+            font-size: 1.2em;
+        }
+        
+        .example-box {
+            background: #e8f5e9;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+            border-left: 6px solid #4caf50;
+        }
+        
+        .example-box h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+            border-left: 6px solid #ff9800;
+        }
+        
+        .warning-box h4 {
+            color: #e65100;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .important {
+            background: #ffebee;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 6px solid #f44336;
+            font-weight: 600;
+        }
+        
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+        }
+        
+        .property {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffd54f 0%, #ffeb3b 100%);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 20px 0;
+            padding-left: 60px;
+            position: relative;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .subtitle { font-size: 1em; }
+            .tab { padding: 15px 20px; font-size: 16px; }
+            .tab-content { padding: 20px; font-size: 1em; }
+            h2 { font-size: 1.8em; }
+            h3 { font-size: 1.4em; }
+            .two-columns { grid-template-columns: 1fr; }
+        }
+        
+        .interactive-note {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 6px solid #2196f3;
+        }
+        
+        .interactive-note h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📐 Teoria Matematica</h1>
+            <p class="subtitle">Ripasso essenziale per affrontare gli esercizi</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'potenze')">🔢 Potenze</button>
+            <button class="tab" onclick="openTab(event, 'probabilita')">🎲 Probabilità</button>
+            <button class="tab" onclick="openTab(event, 'radicali')">√ Radicali</button>
+            <button class="tab" onclick="openTab(event, 'statistica')">📊 Statistica</button>
+        </div>
+        
+        <!-- TAB POTENZE -->
+        <div id="potenze" class="tab-content active">
+            <h2>Le Potenze</h2>
+            
+            <div class="theory-box">
+                <h3>Definizione</h3>
+                <p>Una potenza è un'operazione che indica la <span class="highlight">moltiplicazione ripetuta</span> di un numero (base) per se stesso un certo numero di volte (esponente).</p>
+                
+                <div class="formula-box">
+                    $$a^n = \underbrace{a \times a \times a \times \cdots \times a}_{n \text{ volte}}$$
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>$a$</strong> = base</li>
+                    <li><strong>$n$</strong> = esponente</li>
+                    <li><strong>$a^n$</strong> = potenza</li>
+                </ul>
+            </div>
+            
+            <h3>Proprietà delle Potenze</h3>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>1. Prodotto di potenze con la stessa base</strong>
+                    <div class="formula-box">
+                        $$a^m \cdot a^n = a^{m+n}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $2^3 \cdot 2^5 = 2^{3+5} = 2^8 = 256$
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <strong>2. Quoziente di potenze con la stessa base</strong>
+                    <div class="formula-box">
+                        $$a^m : a^n = a^{m-n}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $5^7 : 5^3 = 5^{7-3} = 5^4 = 625$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>3. Potenza di potenza</strong>
+                    <div class="formula-box">
+                        $$(a^m)^n = a^{m \cdot n}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $(3^2)^4 = 3^{2 \cdot 4} = 3^8 = 6561$
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <strong>4. Potenza di un prodotto</strong>
+                    <div class="formula-box">
+                        $$(a \cdot b)^n = a^n \cdot b^n$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $(2 \cdot 5)^3 = 2^3 \cdot 5^3 = 8 \cdot 125 = 1000$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>5. Potenza di un quoziente</strong>
+                    <div class="formula-box">
+                        $$\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $\left(\frac{3}{2}\right)^2 = \frac{3^2}{2^2} = \frac{9}{4}$
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <strong>6. Potenza con esponente zero</strong>
+                    <div class="formula-box">
+                        $$a^0 = 1 \quad (a \neq 0)$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $1000^0 = 1$<br>
+                        $(-5)^0 = 1$
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Potenze con Esponente Negativo</h3>
+            
+            <div class="theory-box">
+                <div class="formula-box">
+                    $$a^{-n} = \frac{1}{a^n} \quad (a \neq 0)$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <ul>
+                        <li>$2^{-3} = \frac{1}{2^3} = \frac{1}{8}$</li>
+                        <li>$5^{-2} = \frac{1}{5^2} = \frac{1}{25}$</li>
+                        <li>$\frac{1}{3^{-2}} = 3^2 = 9$</li>
+                    </ul>
+                </div>
+                
+                <div class="important">
+                    ⚠️ <strong>Attenzione:</strong> Con esponenti negativi, più l'esponente è negativo (in valore assoluto), più il numero è piccolo!<br>
+                    Esempio: $2^{-4} < 2^{-2}$ perché $\frac{1}{16} < \frac{1}{4}$
+                </div>
+            </div>
+            
+            <h3>Confronto tra Potenze</h3>
+            
+            <div class="theory-box">
+                <p><strong>Per confrontare potenze:</strong></p>
+                
+                <ol class="step-list">
+                    <li><strong>Se hanno la stessa base:</strong> la potenza con esponente maggiore è più grande (se base > 1)</li>
+                    <li><strong>Se hanno lo stesso esponente:</strong> la potenza con base maggiore è più grande</li>
+                    <li><strong>Caso generale:</strong> porta tutto alla stessa base o allo stesso esponente, se possibile</li>
+                </ol>
+                
+                <div class="example-box">
+                    <h4>Esempio pratico:</h4>
+                    <p>Confrontare $2^{500}$, $5^{300}$ e $10^{100}$</p>
+                    <p><strong>Soluzione:</strong> Portiamo tutto all'esponente 100:</p>
+                    <ul>
+                        <li>$2^{500} = (2^5)^{100} = 32^{100}$</li>
+                        <li>$5^{300} = (5^3)^{100} = 125^{100}$</li>
+                        <li>$10^{100} = 10^{100}$</li>
+                    </ul>
+                    <p>Ma $10^{100} = (2 \cdot 5)^{100} = 2^{100} \cdot 5^{100}$, che è maggiore</p>
+                    <p><strong>Quindi:</strong> $2^{500} < 5^{300} < 10^{100}$</p>
+                </div>
+            </div>
+            
+            <h3>Scomposizione in Fattori Primi</h3>
+            
+            <div class="theory-box">
+                <p>Ogni numero naturale maggiore di 1 può essere scomposto in modo <span class="highlight">unico</span> come prodotto di potenze di numeri primi.</p>
+                
+                <div class="formula-box">
+                    $$n = p_1^{a_1} \cdot p_2^{a_2} \cdot p_3^{a_3} \cdots p_k^{a_k}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Scomporre $(3^4 + 3^2)^3 \cdot 5^2$</p>
+                    <ol>
+                        <li>$3^4 + 3^2 = 81 + 9 = 90$</li>
+                        <li>$90 = 2 \cdot 45 = 2 \cdot 9 \cdot 5 = 2 \cdot 3^2 \cdot 5$</li>
+                        <li>$(90)^3 = (2 \cdot 3^2 \cdot 5)^3 = 2^3 \cdot 3^6 \cdot 5^3$</li>
+                        <li>Moltiplicando per $5^2$: $2^3 \cdot 3^6 \cdot 5^{3+2} = 2^3 \cdot 3^6 \cdot 5^5$</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4>⚡ Errori Comuni da Evitare</h4>
+                <ul>
+                    <li>❌ $(a + b)^n \neq a^n + b^n$</li>
+                    <li>❌ $a^m \cdot b^m \neq (a \cdot b)^{m+n}$</li>
+                    <li>❌ $a^m + a^n \neq a^{m+n}$</li>
+                    <li>✅ $a^m \cdot a^n = a^{m+n}$ (solo con stessa base!)</li>
+                </ul>
+            </div>
+            
+            <div class="interactive-note">
+                <h4>💡 Consiglio Pratico</h4>
+                <p>Quando lavori con potenze complesse:</p>
+                <ol>
+                    <li>Scomponi le basi quando possibile (es: $8 = 2^3$, $27 = 3^3$)</li>
+                    <li>Applica le proprietà dall'interno verso l'esterno</li>
+                    <li>Raccogli i fattori comuni quando presenti</li>
+                    <li>Verifica sempre il segno finale!</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- TAB PROBABILITÀ -->
+        <div id="probabilita" class="tab-content">
+            <h2>Calcolo delle Probabilità</h2>
+            
+            <div class="theory-box">
+                <h3>Definizione Classica di Probabilità</h3>
+                <p>La probabilità di un evento è il rapporto tra il numero di <span class="highlight">casi favorevoli</span> e il numero di <span class="highlight">casi possibili</span> (tutti equiprobabili).</p>
+                
+                <div class="formula-box">
+                    $$P(E) = \frac{\text{casi favorevoli}}{\text{casi possibili}} = \frac{n(E)}{n(\Omega)}$$
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li>$E$ = evento</li>
+                    <li>$\Omega$ = spazio campionario (insieme di tutti i casi possibili)</li>
+                    <li>$0 \leq P(E) \leq 1$</li>
+                </ul>
+            </div>
+            
+            <h3>Proprietà Fondamentali</h3>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>Evento certo</strong>
+                    <div class="formula-box">
+                        $$P(\Omega) = 1$$
+                    </div>
+                    <p>L'evento che sicuramente si verifica ha probabilità 1</p>
+                </div>
+                
+                <div class="property">
+                    <strong>Evento impossibile</strong>
+                    <div class="formula-box">
+                        $$P(\emptyset) = 0$$
+                    </div>
+                    <p>L'evento che non può verificarsi ha probabilità 0</p>
+                </div>
+            </div>
+            
+            <div class="property">
+                <strong>Evento complementare</strong>
+                <div class="formula-box">
+                    $$P(\overline{E}) = 1 - P(E)$$
+                </div>
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Se la probabilità di pioggia è 0.3, la probabilità di non pioggia è:</p>
+                    <p>$P(\overline{pioggia}) = 1 - 0.3 = 0.7$</p>
+                </div>
+            </div>
+            
+            <h3>Eventi Indipendenti</h3>
+            
+            <div class="theory-box">
+                <p>Due eventi $A$ e $B$ sono <span class="highlight">indipendenti</span> se il verificarsi di uno non influenza la probabilità dell'altro.</p>
+                
+                <div class="formula-box">
+                    $$P(A \cap B) = P(A) \cdot P(B)$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio: Lanci di una moneta</h4>
+                    <p>Probabilità di ottenere Testa-Testa-Croce-Testa-Testa in 5 lanci:</p>
+                    <p>$$P = \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{32}$$</p>
+                    <p>Ogni lancio è indipendente dal precedente!</p>
+                </div>
+                
+                <div class="important">
+                    ⚠️ <strong>Fallacia del Giocatore d'Azzardo:</strong><br>
+                    Se una moneta è uscita "testa" 10 volte di fila, la probabilità che esca "croce" al prossimo lancio è sempre $\frac{1}{2}$, non maggiore!<br>
+                    <strong>La moneta non ha memoria!</strong>
+                </div>
+            </div>
+            
+            <h3>Probabilità Condizionata</h3>
+            
+            <div class="theory-box">
+                <p>La probabilità che si verifichi $B$ sapendo che si è verificato $A$ è:</p>
+                
+                <div class="formula-box">
+                    $$P(B|A) = \frac{P(A \cap B)}{P(A)}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio: Estrazioni senza reinserimento</h4>
+                    <p>Urna con 10 bianche, 40 rosse, 50 nere (totale 100)</p>
+                    <p>Probabilità di estrarre prima bianca poi rossa:</p>
+                    <ol>
+                        <li>$P(\text{bianca}) = \frac{10}{100} = \frac{1}{10}$</li>
+                        <li>Dopo aver estratto una bianca, rimangono 99 palline (40 rosse)</li>
+                        <li>$P(\text{rossa}|\text{bianca}) = \frac{40}{99}$</li>
+                        <li>$P(\text{bianca e poi rossa}) = \frac{10}{100} \cdot \frac{40}{99} = \frac{400}{9900} = \frac{4}{99} \approx 4.04\%$</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h3>Calcolo Combinatorio</h3>
+            
+            <div class="theory-box">
+                <h4>Permutazioni</h4>
+                <p>Numero di modi per ordinare $n$ oggetti distinti:</p>
+                <div class="formula-box">
+                    $$P_n = n! = n \cdot (n-1) \cdot (n-2) \cdots 2 \cdot 1$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>3 colori per 3 posizioni (interno, esterno, colletto):</p>
+                    <p>$3! = 3 \cdot 2 \cdot 1 = 6$ giacche diverse</p>
+                </div>
+            </div>
+            
+            <div class="theory-box">
+                <h4>Combinazioni</h4>
+                <p>Numero di modi per scegliere $k$ oggetti da $n$ (senza considerare l'ordine):</p>
+                <div class="formula-box">
+                    $$\binom{n}{k} = C_{n,k} = \frac{n!}{k!(n-k)!}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Scegliere 4 persone da 7 per un tavolo:</p>
+                    <p>$$\binom{7}{4} = \frac{7!}{4! \cdot 3!} = \frac{7 \cdot 6 \cdot 5}{3 \cdot 2 \cdot 1} = \frac{210}{6} = 35$$</p>
+                </div>
+                
+                <div class="interactive-note">
+                    <h4>💡 Come ricordare</h4>
+                    <p><strong>Permutazioni:</strong> l'ordine conta (es: ABC ≠ CBA)</p>
+                    <p><strong>Combinazioni:</strong> l'ordine non conta (es: ABC = CBA)</p>
+                </div>
+            </div>
+            
+            <div class="theory-box">
+                <h4>Disposizioni</h4>
+                <p>Numero di modi per scegliere e ordinare $k$ oggetti da $n$:</p>
+                <div class="formula-box">
+                    $$D_{n,k} = \frac{n!}{(n-k)!}$$
+                </div>
+            </div>
+            
+            <h3>Tabelle di Frequenza e Probabilità</h3>
+            
+            <div class="theory-box">
+                <p>Per calcolare probabilità da tabelle:</p>
+                
+                <ol class="step-list">
+                    <li><strong>Identifica il totale:</strong> somma di tutti i casi</li>
+                    <li><strong>Identifica i casi favorevoli:</strong> leggi dalla tabella</li>
+                    <li><strong>Calcola il rapporto:</strong> $P = \frac{\text{favorevoli}}{\text{totale}}$</li>
+                </ol>
+                
+                <div class="example-box">
+                    <h4>Esempio: Tabella doppia entrata</h4>
+                    <table>
+                        <tr>
+                            <th></th>
+                            <th>Ha trovato lavoro</th>
+                            <th>Non ha trovato</th>
+                            <th>Totale</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Ingegneria</strong></td>
+                            <td>42</td>
+                            <td>14</td>
+                            <td>56</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Altre lauree</strong></td>
+                            <td>44</td>
+                            <td>50</td>
+                            <td>94</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Totale</strong></td>
+                            <td>86</td>
+                            <td>64</td>
+                            <td>150</td>
+                        </tr>
+                    </table>
+                    
+                    <p><strong>Percentuale di ingegneri che ha trovato lavoro:</strong></p>
+                    <p>$$\frac{42}{56} \times 100 = 75\%$$</p>
+                </div>
+            </div>
+            
+            <div class="warning-box">
+                <h4>⚡ Errori Comuni</h4>
+                <ul>
+                    <li>❌ Confondere eventi indipendenti con eventi disgiunti</li>
+                    <li>❌ Pensare che eventi passati influenzino eventi futuri in giochi casuali</li>
+                    <li>❌ Sbagliare il denominatore (usare il totale sbagliato)</li>
+                    <li>✅ Verificare sempre se gli eventi sono con o senza reinserimento</li>
+                    <li>✅ Controllare che la somma delle probabilità faccia 1</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- TAB RADICALI -->
+        <div id="radicali" class="tab-content">
+            <h2>I Radicali</h2>
+            
+            <div class="theory-box">
+                <h3>Definizione</h3>
+                <p>La radice $n$-esima di un numero $a$ è quel numero $b$ che elevato alla $n$ dà $a$.</p>
+                
+                <div class="formula-box">
+                    $$\sqrt[n]{a} = b \quad \Leftrightarrow \quad b^n = a$$
+                </div>
+                
+                <p>dove:</p>
+                <ul>
+                    <li><strong>$n$</strong> = indice del radicale</li>
+                    <li><strong>$a$</strong> = radicando</li>
+                    <li><strong>$b$</strong> = radice</li>
+                    <li>Se $n = 2$, si scrive semplicemente $\sqrt{a}$ (radice quadrata)</li>
+                </ul>
+                
+                <div class="important">
+                    ⚠️ <strong>Condizioni di esistenza:</strong><br>
+                    • Se $n$ è pari: $a \geq 0$ (il radicando deve essere non negativo)<br>
+                    • Se $n$ è dispari: $a$ può essere qualsiasi numero reale
+                </div>
+            </div>
+            
+            <h3>Relazione tra Radicali e Potenze</h3>
+            
+            <div class="theory-box">
+                <div class="formula-box">
+                    $$\sqrt[n]{a} = a^{\frac{1}{n}}$$
+                </div>
+                
+                <div class="formula-box">
+                    $$\sqrt[n]{a^m} = a^{\frac{m}{n}}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <ul>
+                        <li>$\sqrt{x} = x^{1/2}$</li>
+                        <li>$\sqrt[3]{x^2} = x^{2/3}$</li>
+                        <li>$\sqrt[4]{x^3} = x^{3/4}$</li>
+                        <li>$\frac{1}{\sqrt{x}} = x^{-1/2}$</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Proprietà dei Radicali</h3>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>1. Prodotto di radicali con lo stesso indice</strong>
+                    <div class="formula-box">
+                        $$\sqrt[n]{a} \cdot \sqrt[n]{b} = \sqrt[n]{a \cdot b}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $\sqrt{2} \cdot \sqrt{8} = \sqrt{16} = 4$
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <strong>2. Quoziente di radicali con lo stesso indice</strong>
+                    <div class="formula-box">
+                        $$\frac{\sqrt[n]{a}}{\sqrt[n]{b}} = \sqrt[n]{\frac{a}{b}}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $\frac{\sqrt{50}}{\sqrt{2}} = \sqrt{\frac{50}{2}} = \sqrt{25} = 5$
+                    </div>
+                </div>
+            </div>
+            
+            <div class="two-columns">
+                <div class="property">
+                    <strong>3. Potenza di un radicale</strong>
+                    <div class="formula-box">
+                        $$(\sqrt[n]{a})^m = \sqrt[n]{a^m}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $(\sqrt{3})^2 = 3$<br>
+                        $(\sqrt[3]{2})^6 = \sqrt[3]{2^6} = \sqrt[3]{64} = 4$
+                    </div>
+                </div>
+                
+                <div class="property">
+                    <strong>4. Radice di radice</strong>
+                    <div class="formula-box">
+                        $$\sqrt[m]{\sqrt[n]{a}} = \sqrt[m \cdot n]{a}$$
+                    </div>
+                    <div class="example-box">
+                        <h4>Esempio:</h4>
+                        $\sqrt{\sqrt[3]{8}} = \sqrt[6]{8} = \sqrt[6]{2^3} = 2^{3/6} = 2^{1/2} = \sqrt{2}$
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Semplificazione di Radicali</h3>
+            
+            <div class="theory-box">
+                <p>Un radicale si può semplificare estraendo i <span class="highlight">fattori perfetti</span> dal radicando.</p>
+                
+                <div class="formula-box">
+                    $$\sqrt[n]{a^n \cdot b} = a \cdot \sqrt[n]{b}$$
+                </div>
+                
+                <ol class="step-list">
+                    <li>Scomponi il radicando in fattori primi</li>
+                    <li>Raggruppa i fattori in potenze con esponente uguale all'indice</li>
+                    <li>Porta fuori dalla radice i fattori completi</li>
+                </ol>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <ul>
+                        <li>$\sqrt{18} = \sqrt{9 \cdot 2} = \sqrt{3^2 \cdot 2} = 3\sqrt{2}$</li>
+                        <li>$\sqrt{50} = \sqrt{25 \cdot 2} = 5\sqrt{2}$</li>
+                        <li>$\sqrt[3]{54} = \sqrt[3]{27 \cdot 2} = \sqrt[3]{3^3 \cdot 2} = 3\sqrt[3]{2}$</li>
+                        <li>$\sqrt{16} = \sqrt{2^4} = 2^2 = 4$</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Somma e Sottrazione di Radicali</h3>
+            
+            <div class="theory-box">
+                <p>Si possono sommare o sottrarre solo radicali <span class="highlight">simili</span> (stesso indice e stesso radicando).</p>
+                
+                <div class="formula-box">
+                    $$a\sqrt[n]{b} \pm c\sqrt[n]{b} = (a \pm c)\sqrt[n]{b}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio completo:</h4>
+                    <p>$\sqrt{18} - 5\sqrt{16} - \sqrt[3]{54} + 2\sqrt{50}$</p>
+                    
+                    <ol>
+                        <li>$\sqrt{18} = 3\sqrt{2}$</li>
+                        <li>$5\sqrt{16} = 5 \cdot 4 = 20$</li>
+                        <li>$\sqrt[3]{54} = 3\sqrt[3]{2}$</li>
+                        <li>$2\sqrt{50} = 10\sqrt{2}$</li>
+                    </ol>
+                    
+                    <p>Risultato: $3\sqrt{2} - 20 - 3\sqrt[3]{2} + 10\sqrt{2}$</p>
+                    <p>$= 13\sqrt{2} - 20 - 3\sqrt[3]{2}$</p>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚡ Attenzione!</h4>
+                    <p>❌ $\sqrt{a} + \sqrt{b} \neq \sqrt{a+b}$</p>
+                    <p>Esempio: $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$</p>
+                    <p>Ma $\sqrt{9+16} = \sqrt{25} = 5 \neq 7$</p>
+                </div>
+            </div>
+            
+            <h3>Razionalizzazione</h3>
+            
+            <div class="theory-box">
+                <p>Razionalizzare significa <span class="highlight">eliminare i radicali dal denominatore</span> di una frazione.</p>
+                
+                <h4>Caso 1: Denominatore con un solo radicale</h4>
+                <div class="formula-box">
+                    $$\frac{a}{\sqrt[n]{b}} = \frac{a \cdot \sqrt[n]{b^{n-1}}}{\sqrt[n]{b^n}} = \frac{a\sqrt[n]{b^{n-1}}}{b}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <ul>
+                        <li>$\frac{1}{\sqrt{2}} = \frac{1 \cdot \sqrt{2}}{\sqrt{2} \cdot \sqrt{2}} = \frac{\sqrt{2}}{2}$</li>
+                        <li>$\frac{3}{\sqrt[3]{4}} = \frac{3 \cdot \sqrt[3]{2}}{\sqrt[3]{8}} = \frac{3\sqrt[3]{2}}{2}$</li>
+                    </ul>
+                </div>
+                
+                <h4>Caso 2: Denominatore binomio con radicali (coniugato)</h4>
+                <div class="formula-box">
+                    $$\frac{a}{b \pm \sqrt{c}} = \frac{a(b \mp \sqrt{c})}{b^2 - c}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>$\frac{13}{5 - 2\sqrt{3}}$</p>
+                    
+                    <p>Moltiplichiamo per il coniugato $5 + 2\sqrt{3}$:</p>
+                    
+                    <p>$$\frac{13(5 + 2\sqrt{3})}{(5 - 2\sqrt{3})(5 + 2\sqrt{3})} = \frac{65 + 26\sqrt{3}}{25 - 12} = \frac{65 + 26\sqrt{3}}{13} = 5 + 2\sqrt{3}$$</p>
+                </div>
+            </div>
+            
+            <h3>Confronto tra Radicali</h3>
+            
+            <div class="theory-box">
+                <p><strong>Con lo stesso indice:</strong></p>
+                <div class="formula-box">
+                    $$\text{Se } a < b \text{ allora } \sqrt[n]{a} < \sqrt[n]{b}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>$3 < 5 < 7$ quindi $\sqrt[3]{3} < \sqrt[3]{5} < \sqrt[3]{7}$</p>
+                </div>
+                
+                <p><strong>Con indici diversi:</strong> porta tutto allo stesso indice (m.c.m.)</p>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Confrontare $\sqrt[3]{5}$ e $\sqrt{3}$</p>
+                    <ol>
+                        <li>m.c.m.(2,3) = 6</li>
+                        <li>$\sqrt[3]{5} = \sqrt[6]{5^2} = \sqrt[6]{25}$</li>
+                        <li>$\sqrt{3} = \sqrt[6]{3^3} = \sqrt[6]{27}$</li>
+                        <li>$25 < 27$ quindi $\sqrt[3]{5} < \sqrt{3}$</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h3>Radicali Doppi</h3>
+            
+            <div class="theory-box">
+                <p>Alcuni radicali doppi si possono semplificare:</p>
+                
+                <div class="formula-box">
+                    $$\sqrt{a \pm 2\sqrt{b}} = \sqrt{x} \pm \sqrt{y}$$
+                </div>
+                
+                <p>dove $x$ e $y$ verificano:</p>
+                <ul>
+                    <li>$x + y = a$</li>
+                    <li>$x \cdot y = b$</li>
+                </ul>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Semplificare $\sqrt{4 + 2\sqrt{3}}$</p>
+                    
+                    <ol>
+                        <li>Cerco $x, y$ con $x + y = 4$ e $xy = 3$</li>
+                        <li>Soluzione: $x = 3, y = 1$</li>
+                        <li>$\sqrt{4 + 2\sqrt{3}} = \sqrt{3} + \sqrt{1} = \sqrt{3} + 1$</li>
+                    </ol>
+                    
+                    <p>Verifica: $(\sqrt{3} + 1)^2 = 3 + 2\sqrt{3} + 1 = 4 + 2\sqrt{3}$ ✓</p>
+                </div>
+            </div>
+            
+            <div class="interactive-note">
+                <h4>💡 Strategie di Risoluzione</h4>
+                <ol>
+                    <li><strong>Semplifica sempre prima:</strong> estrai i fattori perfetti</li>
+                    <li><strong>Converti in potenze:</strong> quando ci sono molte operazioni complesse</li>
+                    <li><strong>Razionalizza alla fine:</strong> dopo aver semplificato tutto il possibile</li>
+                    <li><strong>Verifica:</strong> eleva al quadrato (o alla potenza opportuna) per controllare</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- TAB STATISTICA -->
+        <div id="statistica" class="tab-content">
+            <h2>Statistica Descrittiva</h2>
+            
+            <div class="theory-box">
+                <h3>Introduzione</h3>
+                <p>La <span class="highlight">statistica descrittiva</span> è la parte della statistica che si occupa di raccogliere, organizzare, rappresentare e sintetizzare i dati.</p>
+                
+                <p><strong>Concetti base:</strong></p>
+                <ul>
+                    <li><strong>Popolazione:</strong> l'insieme di tutti gli elementi che interessano</li>
+                    <li><strong>Campione:</strong> un sottoinsieme della popolazione</li>
+                    <li><strong>Carattere/Variabile:</strong> la proprietà che si studia</li>
+                    <li><strong>Modalità:</strong> i valori che può assumere il carattere</li>
+                </ul>
+            </div>
+            
+            <h3>Frequenze</h3>
+            
+            <div class="theory-box">
+                <table>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Simbolo</th>
+                        <th>Definizione</th>
+                        <th>Formula</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Frequenza assoluta</strong></td>
+                        <td>$n_i$</td>
+                        <td>Numero di volte che compare il valore</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frequenza relativa</strong></td>
+                        <td>$f_i$</td>
+                        <td>Proporzione rispetto al totale</td>
+                        <td>$f_i = \frac{n_i}{n}$</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Frequenza percentuale</strong></td>
+                        <td>$p_i$</td>
+                        <td>Frequenza in percentuale</td>
+                        <td>$p_i = f_i \times 100$</td>
+                    </tr>
+                </table>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Su 150 laureati, 42 in ingegneria hanno trovato lavoro</p>
+                    <ul>
+                        <li>Frequenza assoluta: $n = 42$</li>
+                        <li>Frequenza relativa: $f = \frac{42}{150} = 0.28$</li>
+                        <li>Frequenza percentuale: $p = 28\%$</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Indici di Posizione Centrale</h3>
+            
+            <div class="theory-box">
+                <h4>1. Media Aritmetica</h4>
+                <p>È la somma di tutti i valori divisa per il numero di valori.</p>
+                
+                <div class="formula-box">
+                    $$\bar{x} = \frac{x_1 + x_2 + \cdots + x_n}{n} = \frac{\sum_{i=1}^{n} x_i}{n}$$
+                </div>
+                
+                <p><strong>Con frequenze:</strong></p>
+                <div class="formula-box">
+                    $$\bar{x} = \frac{\sum_{i=1}^{k} n_i \cdot x_i}{n}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Voti: 6, 7, 8, 7, 9</p>
+                    <p>$$\bar{x} = \frac{6+7+8+7+9}{5} = \frac{37}{5} = 7.4$$</p>
+                </div>
+                
+                <div class="important">
+                    ⚠️ <strong>Proprietà della media:</strong><br>
+                    • È influenzata da valori estremi<br>
+                    • La somma degli scarti dalla media è sempre zero: $\sum(x_i - \bar{x}) = 0$
+                </div>
+            </div>
+            
+            <div class="theory-box">
+                <h4>2. Mediana</h4>
+                <p>È il valore centrale quando i dati sono ordinati.</p>
+                
+                <div class="formula-box">
+                    $$Me = \begin{cases}
+                    x_{\frac{n+1}{2}} & \text{se } n \text{ è dispari}\\[10pt]
+                    \frac{x_{\frac{n}{2}} + x_{\frac{n}{2}+1}}{2} & \text{se } n \text{ è pari}
+                    \end{cases}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <p><strong>Caso dispari:</strong> 2, 3, 5, 7, 9 → $Me = 5$</p>
+                    <p><strong>Caso pari:</strong> 2, 3, 5, 7, 9, 10 → $Me = \frac{5+7}{2} = 6$</p>
+                </div>
+                
+                <div class="interactive-note">
+                    <h4>💡 Quando usare media vs mediana?</h4>
+                    <ul>
+                        <li><strong>Media:</strong> dati omogenei senza valori estremi</li>
+                        <li><strong>Mediana:</strong> presenza di outliers o distribuzioni asimmetriche</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="theory-box">
+                <h4>3. Moda</h4>
+                <p>È il valore (o i valori) che compare con maggiore frequenza.</p>
+                
+                <div class="example-box">
+                    <h4>Esempi:</h4>
+                    <ul>
+                        <li>2, 3, 3, 5, 7, 7, 7, 9 → Moda = 7</li>
+                        <li>1, 2, 2, 3, 3, 4 → Bimodale: Moda = 2 e 3</li>
+                        <li>1, 2, 3, 4, 5 → Nessuna moda (amodale)</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Media Ponderata</h3>
+            
+            <div class="theory-box">
+                <p>Quando i valori hanno diversa "importanza" (peso):</p>
+                
+                <div class="formula-box">
+                    $$\bar{x}_p = \frac{\sum_{i=1}^{n} w_i \cdot x_i}{\sum_{i=1}^{n} w_i}$$
+                </div>
+                
+                <p>dove $w_i$ sono i pesi.</p>
+                
+                <div class="example-box">
+                    <h4>Esempio: Età media di una festa</h4>
+                    <p>Dato:</p>
+                    <ul>
+                        <li>Età media uomini: 28 anni</li>
+                        <li>Età media donne: 18 anni</li>
+                        <li>Età media totale: 24 anni</li>
+                    </ul>
+                    
+                    <p><strong>Trovare il rapporto uomini/donne:</strong></p>
+                    <ol>
+                        <li>$\frac{28U + 18D}{U + D} = 24$</li>
+                        <li>$28U + 18D = 24U + 24D$</li>
+                        <li>$4U = 6D$</li>
+                        <li>$\frac{U}{D} = \frac{3}{2}$</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <h3>Tabelle di Frequenza</h3>
+            
+            <div class="theory-box">
+                <p>Le tabelle organizzano i dati in modo chiaro e permettono calcoli rapidi.</p>
+                
+                <h4>Tabella semplice:</h4>
+                <table>
+                    <tr>
+                        <th>Valore ($x_i$)</th>
+                        <th>Frequenza ($n_i$)</th>
+                        <th>Freq. Relativa ($f_i$)</th>
+                        <th>Freq. % ($p_i$)</th>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>3</td>
+                        <td>0.15</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>0.40</td>
+                        <td>40%</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>7</td>
+                        <td>0.35</td>
+                        <td>35%</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>2</td>
+                        <td>0.10</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Totale</strong></td>
+                        <td><strong>20</strong></td>
+                        <td><strong>1.00</strong></td>
+                        <td><strong>100%</strong></td>
+                    </tr>
+                </table>
+                
+                <p>Media: $\bar{x} = \frac{6 \cdot 3 + 7 \cdot 8 + 8 \cdot 7 + 9 \cdot 2}{20} = \frac{146}{20} = 7.3$</p>
+            </div>
+            
+            <h3>Dati Raggruppati in Classi</h3>
+            
+            <div class="theory-box">
+                <p>Quando i dati sono raggruppati in intervalli:</p>
+                
+                <table>
+                    <tr>
+                        <th>Classe</th>
+                        <th>Frequenza</th>
+                        <th>Valore centrale</th>
+                    </tr>
+                    <tr>
+                        <td>10-19</td>
+                        <td>20</td>
+                        <td>14.5</td>
+                    </tr>
+                    <tr>
+                        <td>20-29</td>
+                        <td>30</td>
+                        <td>24.5</td>
+                    </tr>
+                    <tr>
+                        <td>30-39</td>
+                        <td>60</td>
+                        <td>34.5</td>
+                    </tr>
+                </table>
+                
+                <p>Si usa il <span class="highlight">valore centrale</span> di ogni classe:</p>
+                
+                <div class="formula-box">
+                    $$\text{Valore centrale} = \frac{\text{estremo inf.} + \text{estremo sup.}}{2}$$
+                </div>
+                
+                <div class="example-box">
+                    <h4>Esempio:</h4>
+                    <p>Classe 20-29: valore centrale = $\frac{20+29}{2} = 24.5$</p>
+                </div>
+            </div>
+            
+            <h3>Tabelle a Doppia Entrata</h3>
+            
+            <div class="theory-box">
+                <p>Per studiare la relazione tra due variabili:</p>
+                
+                <table>
+                    <tr>
+                        <th></th>
+                        <th>In città</th>
+                        <th>In campagna</th>
+                        <th>Totale riga</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Da solo</strong></td>
+                        <td>12</td>
+                        <td>3</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td><strong>In due</strong></td>
+                        <td>9</td>
+                        <td>6</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Totale colonna</strong></td>
+                        <td>21</td>
+                        <td>9</td>
+                        <td>30</td>
+                    </tr>
+                </table>
+                
+                <p><strong>Calcoli utili:</strong></p>
+                <ul>
+                    <li>% in campagna che vanno in due: $\frac{6}{9} \times 100 = 66.7\%$</li>
+                    <li>% totale che va in due: $\frac{15}{30} \times 100 = 50\%$</li>
+                    <li>% totale in città: $\frac{21}{30} \times 100 = 70\%$</li>
+                </ul>
+            </div>
+            
+            <h3>Percentuali</h3>
+            
+            <div class="theory-box">
+                <p>Le percentuali esprimono una parte rispetto a 100.</p>
+                
+                <div class="formula-box">
+                    $$\text{Percentuale} = \frac{\text{parte}}{\text{totale}} \times 100$$
+                </div>
+                
+                <div class="two-columns">
+                    <div class="example-box">
+                        <h4>Calcolare la percentuale:</h4>
+                        <p>42 laureati su 56 in ingegneria:</p>
+                        <p>$$\frac{42}{56} \times 100 = 75\%$$</p>
+                    </div>
+                    
+                    <div class="example-box">
+                        <h4>Calcolare il valore da percentuale:</h4>
+                        <p>Il 30% di 200:</p>
+                        <p>$$\frac{30}{100} \times 200 = 60$$</p>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚡ Errore comune</h4>
+                    <p>❌ Confondere "percentuale rispetto al totale" con "percentuale rispetto a un sottogruppo"</p>
+                    <p>Esempio: 42 ingegneri che lavorano</p>
+                    <ul>
+                        <li>Rispetto agli ingegneri (56): $\frac{42}{56} = 75\%$</li>
+                        <li>Rispetto al totale (150): $\frac{42}{150} = 28\%$</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Interpretazione dei Dati</h3>
+            
+            <div class="theory-box">
+                <ol class="step-list">
+                    <li><strong>Leggi attentamente la domanda:</strong> cosa chiede esattamente?</li>
+                    <li><strong>Identifica il totale corretto:</strong> totale generale o di un sottogruppo?</li>
+                    <li><strong>Identifica i casi favorevoli:</strong> quali valori considerare?</li>
+                    <li><strong>Scegli la formula giusta:</strong> frequenza, percentuale, media?</li>
+                    <li><strong>Verifica il risultato:</strong> ha senso? È nell'intervallo giusto?</li>
+                </ol>
+            </div>
+            
+            <div class="interactive-note">
+                <h4>💡 Consigli Pratici</h4>
+                <ul>
+                    <li>Scrivi sempre i totali parziali e generali</li>
+                    <li>Usa tabelle anche per organizzare dati sparsi</li>
+                    <li>Controlla che le percentuali sommino a 100%</li>
+                    <li>Fai esempi numerici semplici per capire il problema</li>
+                    <li>Disegna schemi quando ci sono incroci di dati</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            
+            // Scroll to top quando cambi scheda
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Aggiungi evidenziazione formule al passaggio del mouse
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulaBoxes = document.querySelectorAll('.formula-box');
+            formulaBoxes.forEach(box => {
+                box.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.3s';
+                });
+                box.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
